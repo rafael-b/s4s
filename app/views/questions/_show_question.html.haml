@@ -1,0 +1,35 @@
+- log_object_partial '/questions/show_question'
+
+- item = @object
+  
+.block.for_text
+  .title= 'Question Text'
+  .content
+    .text.for_html= safe item.content
+
+.block
+  .title= 'Answers'
+  .content
+    %table
+      %tbody
+        %tr
+          %th.w20px= 'No.'
+          %th.w50px= 'Correct?'
+          %th= 'Answer Text'
+        - num = 0
+        - Question::ANSWER_PREFIX.each do |q|
+          - num = num + 1
+          %tr
+            %td.w20px= "#{num}."
+            %td.w50px= RDisplay.yn_with_style_y(item.send("correct_#{q}".to_sym))
+            %td= RDisplay.str(item.send("answer_#{q}".to_sym))
+
+  %p= '<b>Note:</b> Blank answers are not displayed.'.html_safe
+
+.block
+  .title= 'Answer Mask'
+  .content
+    %table
+      %tbody
+        = RDisplay.row('Current',Binary.show_flags(item.answer_mask))
+        = RDisplay.row('Published',Binary.show_flags(item.p_answer_mask))

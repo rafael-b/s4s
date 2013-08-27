@@ -1,0 +1,47 @@
+- if @course
+  .course_details
+    %h1= safe @course.title
+    %h2= safe @course.description
+- else
+  .error= "Course Not Found..."
+      
+- if @lecture
+  %hr
+  .lecture
+    %h3= safe @lecture.title
+    %h4= safe @lecture.description
+- else
+  .error= "Lecture Not Found..."
+      
+- if @object
+  %hr
+  .debug
+    = "Result ID: #{@object.id}<br/>".html_safe
+    = "Answers #: #{@object.answers.size}"
+    
+  - if @object.passed
+    %div.quiz_eval.passed= 'Quiz: <b>PASSED</b> !!'.html_safe
+  - else
+    %div.quiz_eval.failed= 'Quiz: <b>FAILED</b>'.html_safe
+  %div.quiz_score.failed= "Score: #{@object.score}"
+  
+  %br
+  %hr
+  .quiz_submitted
+    %h4= 'Answers:'
+    %table.quiz_result_answers
+      %tbody
+        - @object.answers.each do |ans|
+          %tr
+            %td.quiz_result_question_number= "#{ans.position}."
+            - Question::ANSWER_PREFIX.each do |prefix|
+              - if ans.send("answer_#{prefix}")
+                - if ans.correct
+                  %td.quiz_answer_eval_td
+                    .quiz_answer_eval.correct= 'CORRECT'
+                - else
+                  %td.quiz_answer_eval_td
+                    .quiz_answer_eval.incorrect= 'INCORRECT'
+
+  %br
+  = "Passed #{@object.correct_n} out of #{@object.questions_n} questions."

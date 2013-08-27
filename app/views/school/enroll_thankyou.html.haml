@@ -1,0 +1,15 @@
+%h1= 'Thank You for Enrollment in:'
+
+- if @object
+  .block
+    %h3= @object.title
+    %h4= @object.description
+    = safe @object.abstract
+
+- if @page
+  = safe Parser.parse(@page.p_content)
+
+- else
+  .error= 'Static text needed.'
+  
+  

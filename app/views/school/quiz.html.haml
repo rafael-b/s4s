@@ -1,0 +1,66 @@
+
+- if @course
+  .course_details
+    %h1= safe @course.title
+    %h2= safe @course.description
+- else
+  .error= "Course Not Found..."
+      
+- if @lecture
+  %hr
+  .lecture
+    %h3= safe @lecture.title
+    %h4= safe @lecture.description
+- else
+  .error= "Lecture Not Found..."
+      
+- if @object
+
+  .debug
+    = "Quiz<br/>".html_safe
+    = @quiz.inspect
+  .debug
+    = "Result<br/>".html_safe
+    = @object.inspect
+
+
+  .quiz_form
+    = form_for(@object,:url=>"/school/#{@object.id}/quiz_submit") do |f|
+      = render :partial=>'/shared/admin/form_errors'
+  
+      - f.fields_for :answers do |answer_form|
+        - ans = answer_form.object
+        .block.for_quiz_question
+          %div.quiz_question= "#{ans.position}. #{safe ans.question_text}".html_safe
+          %table.for_quiz_answers
+            - Question::ANSWER_PREFIX.each do |prefix|
+              - txt = ans.send("question_#{prefix}")
+              - unless txt.blank?
+                %tr
+                  %td.quiz_letter= "#{prefix})"
+                  %td.quiz_checkbox= answer_form.check_box "answer_#{prefix}".to_sym
+                  %td.quiz_answer= safe txt
+
+      -#- @object.answers.each do |ans|
+      -#  .block.for_question
+      -#    = "#{ans.position}. #{safe ans.question_text}".html_safe
+      -#    %br
+      -#    %br
+      -#    
+      -#    - Question::ANSWER_PREFIX.each do |prefix|
+      -#      - txt = ans.send("answer_#{prefix}")
+      -#      - unless txt.blank?
+      -#        = "&nbsp;&nbsp;&nbsp;&nbsp;<b>#{prefix}.</b>".html_safe
+      -#        <input type="checkbox" name="answer_#{ans.position}[#{prefix}]" id="answer_#{ans.position}_#{prefix}" value="false" />
+      -#        = safe txt
+      -#        %br
+              
+  .form_actions.buttons.large
+    .buttons_inner
+      = RDisplay.cancel_form_link("/school/#{@lecture.id}/lecture")
+      | 
+      = RDisplay.submit_form_link("edit_result_#{@object.id}",:label=>'Submit')
+  
+
+- else
+  .error= "Quiz Not Found..."

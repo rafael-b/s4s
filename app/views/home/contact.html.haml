@@ -1,0 +1,69 @@
+
+%h1= 'Contact Us'
+%hr
+
+
+#contact_info
+
+  %h2= 'Contact Information'
+
+  - if @page
+    = safe Parser.parse(@page.p_content)
+
+  - else
+    %h5.error= 'Need static contact information text.'
+
+#contact_form
+
+  %h2= 'Contact form'
+  
+  = form_for(@object,:url=>"/home/contact_submit") do |f|
+  
+    = render :partial=>'/shared/admin/form_errors'
+  
+    .block
+      %h4= 'Personal Information:'
+      %table
+        %tbody
+          = RDisplay.row('Your Name:',f.text_field(:user_name,:class=>'required'))
+          = RDisplay.row('Your Email:',f.text_field(:user_email,:class=>'required'))
+          %tr
+            %td.label= ''
+            %td.data
+              %span.note= 'Note:'
+              = "It is our strict policy to keep your personal information private."
+
+      %h4= "So, Tell Us Your Story:"
+      %table
+        %tbody
+          = RDisplay.row('Subject:',f.text_field(:subject,:class=>'required'))
+          = RDisplay.row('Content:',f.text_area(:content,:rows=>5,:class=>'required'))
+          %tr
+            %td.label= ''
+            %td.data
+              %span.note= 'Note:'
+              = "We promise to read your message carefully and respond as soon as humanly possible."
+
+      %hr
+      = f.hidden_field :security_question_id
+      = "Oh, and one more thing -"
+      %span.note= "Are you human?"
+      = "Answer me this:"
+      %br
+      %span.bold= safe @security_question
+      = "&nbsp;&nbsp;&nbsp;".html_safe
+      - if @object.security_answer_invalid
+        .field_with_errors= f.text_field :security_answer, :class=>'tiny'
+      - else
+        = f.text_field :security_answer, :class=>'tiny'
+
+
+  .form_actions.buttons
+    .buttons_inner
+      = RDisplay.cancel_form_link("/home/")
+      | 
+      = RDisplay.submit_form_link("new_email",:label=>'Submit')
+  
+  
+  
+
