@@ -9,8 +9,7 @@
 
     = render :partial=>'/layouts/load_styles'
     
-    = javascript_include_tag 'jquery_161_min', 'jquery_platformselector'
-    = javascript_include_tag 'rails', 'application'
+    = javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'
     
     %script{:type=>"text/javascript"}
       = "var current_controller = \"#{@current_controller};\"".html_safe
