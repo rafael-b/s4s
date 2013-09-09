@@ -2,7 +2,7 @@ puts ' -- pages'
 abstract = <<EOS
 EOS
 content = <<EOS
-<h1>Mike's Home Page</h1>
+<h1>Home Page</h1>
 </p>
 <p>
 This is the Home Page.</p>
@@ -229,9 +229,9 @@ Snipplet.create(
   :active => false
 )
 content = <<EOS
-&copy;2012 Michael Buxton
+&copy;2013 skills4safety
 &middot;
-Powered by Telateres
+Powered by RSite
 EOS
 styles = <<EOS
 EOS
@@ -505,7 +505,7 @@ styles = <<EOS
 }  
   
 #page a {
-  color: #069;
+  color: #900;
   text-decoration: underline;
 }
 #page a.disabled {
@@ -1058,6 +1058,14 @@ styles = <<EOS
 #navigation_inner {}
 #navigation_inside {}
 
+#navigation hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #eee;
+  padding: 0px;
+  margin: 10px 0px;
+}
+
 #navigation li.spacer {
   padding-bottom: 10px;
 }
@@ -1174,7 +1182,7 @@ CssStyle.create(
   :app_segment_id=>10,
   :position=>300,
   :published=>true,
-  :active=>true
+  :active=>false
 )
 styles = <<EOS
 #filters_block {
@@ -1505,11 +1513,6 @@ table#main td#main_td {
 }
 #wrapper_inside {
   padding: 0px;
-}
-
-/*--------------------*//*header*/
-#header h1 em {
-  color: #f90;
 }
 
 /*--------------------*//*page*/
@@ -1902,7 +1905,7 @@ styles = <<EOS
   background-color: #ccc;
   border: 1px solid #666;
   border-radius: 4px;
-  box-shadow: 1px 1px 1px #ccc;
+  box-shadow: 1px 1px 2px #666;
 }
 
 #page .role {width:80px;}
@@ -1910,75 +1913,52 @@ styles = <<EOS
 #page .appsegment {width:80px;}
 #page .boolean_flag {width:50px;}
 
+#page .status.updated,
 #page .role.developer,
-#page .appsegment.web,
-#page .status.new {
-  color: #000;
-  /*border-color: #657;*/
-  background-color: #cbd;
-}
-#page .appsegment.global,
-#page .status.updated {
-  color: #000;
-  /*border-color: #567;*/
-  background-color: #bcd;
-}
+#page .appsegment.web  {background-color: #cbd;}
+#page .appsegment.global {background-color: #bcd;}
 #page .appsegment.home,
 #page .boolean_flag.yes_flag_strong,
-#page .status.published_alt {
-  color: #000;
-  /*border-color: #465;*/
-  background-color: #bdc;
-}
+#page .status.published_alt {background-color: #bdc;}
+#page .status.new, 
 #page .role.admin,
 #page .appsegment.admin,
 #page .status.changed,
-#page .boolean_flag.no_flag_strong {
-  color: #000;
-  /*border-color: #756;*/
-  background-color: #dbc;
-}
-#page .appsegment.blog,
-#page .appsegment.forum,
-#page .appsegment.store,
-#page .status.disabled {
-  background-color: #fff;
-  font-weight: normal;
-  color: #999;
-  border-color: #ccc;
-  box-shadow: 0px 0px 4px #ccc;
-}
-#page .appsegment.auth {
-  color: #000;
-  /*border-color: #654;*/
-  background-color: #dcb;
-}
-#page .appsegment.school {
-  color: #000;
-  /*border-color: #886;*/
-  background-color: #ddb;
-}
-
+#page .boolean_flag.no_flag_strong {background-color: #dbc;}
+#page .appsegment.auth {background-color: #dcb;}
+#page .appsegment.school {background-color: #ddb;}
 #page .status.new,
 #page .status.updated,
 #page .status.changed,
 #page .boolean_flag.no_flag_strong,
 #page .boolean_flag.yes_flag_strong {
-  box-shadow: 3px 3px 5px #000;
+  box-shadow: 2px 3px 3px #666;
 }
-#page .status.new {
-  background-color: #00c;
+#page .status.published {
+  color: #333;
+  border-color: #999;
+  background-color: #ccc;
+  box-shadow: 0px 0px 4px #ccc;
+  font-weight: bold;
 }
-#page .status.updated,
-#page .status.changed {
-  background-color: #c00;
+#page .appsegment.blog,
+#page .appsegment.forum,
+#page .appsegment.store,
+#page .status.disabled {
+  color: #999;
+  border-color: #ccc;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px #ccc;
+  font-weight: normal;
 }
-#page .status.new,
-#page .status.updated,
-#page .status.changed {
-  color: #fff;
-  font-weight: normal
-letter-spacing: 1px;
+/*----------------------------*//*binary_flags*/
+#page .binary_flags {
+  font-family: monospace;
+  font-size: 12px;
+}
+#page .binary_flags .one {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 EOS
 CssStyle.create(
@@ -2401,17 +2381,6 @@ styles = <<EOS
   border-top: 1px solid #ccc;
   margin: 10px 0px 20px;
 }
-
-/*--------------------*//*tables*/
-#page table {
-  width: 100%;
-}
-#page table td {
-  padding: 5px 10px;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  vertical-align: top;
-}
 EOS
 CssStyle.create(
   :app_id=>nil,
@@ -2699,15 +2668,24 @@ styles = <<EOS
   padding: 0px 0px 5px;
   border-bottom: 1px solid #ccc;
 }
-#page .quiz_answers {}
-#page .quiz_letter {
-  display: inline-block;
-  padding: 0px 5px 0px 20px;
+#page table.for_quiz_answers {
+  width: 100%;
+}
+#page table.for_quiz_answers td {
+  border: none;
+}
+#page table.for_quiz_answers td.quiz_letter {
   font-weight: bold;
   text-align: right;
+  width: 40px;
 }
-#page .quiz_letter {}
-#page .quiz_answer {}
+#page table.for_quiz_answers td.quiz_checkbox {
+  text-align: center;
+  width: 20px;
+}
+#page table.for_quiz_answers td.quiz_answer {
+  text-align: left;
+}
 
 #page table.quiz_result_answers {
   width: auto;
@@ -2800,6 +2778,7 @@ styles = <<EOS
 
 /*--------------------*//*error*/
 #page .error {
+  color: #000;
   margin: 10px 0px;
   padding: 10px 20px;
   border: 1px solid #fff;
@@ -2814,9 +2793,9 @@ styles = <<EOS
 EOS
 CssStyle.create(
   :app_id=>nil,
-  :code => 'block',
-  :name => 'Block',
-  :title => 'web > Block',
+  :code => 'blocks',
+  :name => 'Blocks',
+  :title => 'web > Blocks',
   :description => '',
   :styles=>styles,
   :p_styles=>styles,
@@ -2827,7 +2806,8 @@ CssStyle.create(
 )
 styles = <<EOS
 #page .debug {
-  display: none;
+  display: block;
+  font: 10px/16px monospace;
 }
 EOS
 CssStyle.create(
@@ -2840,6 +2820,75 @@ CssStyle.create(
   :p_styles=>styles,
   :app_segment_id=>11,
   :position=>100,
+  :published=>true,
+  :active=>true
+)
+styles = <<EOS
+#page table {
+  width: 100%;
+  margin: 0px 0px 10px;
+}
+#page table td {
+  padding: 5px 10px;
+  vertical-align: top;
+}
+#page table td.first {padding-left:0px;}
+#page table td.last  {padding-right:0px;border-right:none;}
+
+/*--------------------*//*table.like_columns*/
+#page table.like_columns {}
+#page table.like_columns td {border-right: 1px dotted #ccc;}
+#page table.like_columns td.last {border-right: none;}
+
+
+/*--------------------*//*table.for_list*/
+#page table.for_list {}
+#page table.for_list td {
+  border-bottom: 1px dotted #ccc;
+  border-right: 1px dotted #ccc;
+}
+#page table.for_list td.last {
+  border-right: none;
+}
+
+/*--------------------*//*table.for_data*/
+#page table.for_data {}
+#page table.for_data caption {
+  padding: 2px 5px;
+  text-align: left;
+  font-weight: bold;
+  background-color: #ddd;
+  border: 1px solid #fff;
+  border-color: #fff #999 #999 #fff;
+}
+#page table.for_data th,
+#page table.for_data td {
+  padding: 2px 5px;
+  border: 1px solid #fff;
+}
+#page table.for_data th {
+  background-color: #eee;
+  border-color: #fff #fff #ccc #fff;
+  font-weight: bold;
+}
+#page table.for_data td.label {
+  width: 100px;
+  background-color: #eee;
+  border-color: #fff #ccc #ccc #fff;
+  text-align: right;
+  font-weight: bold;
+}
+EOS
+CssStyle.create(
+  :app_id=>nil,
+  :code => 'tables',
+  :name => 'Tables',
+  :title => 'web > Tables',
+  :description => '',
+  :styles=>styles,
+  :p_styles=>styles,
+  :app_segment_id=>2,
+  :position=>354,
   :published=>true,
   :active=>true
 )
@@ -3051,7 +3100,7 @@ JsScript.create(
   :app_segment_id => 1,
   :position => 0,
   :published => true,
-  :active => false
+  :active => true
 )
 scripts = <<EOS
 function replaceStuffForUserbar {
@@ -3347,6 +3396,54 @@ Question.create(
   :correct_f => false,
   :p_correct_f => false,
   :position => 2,
+  :published => true,
+  :active => true
+)
+abstract = <<EOS
+EOS
+content = <<EOS
+What is your blah?!?
+EOS
+question_text = <<EOS
+EOS
+Question.create(
+  :quiz_id => 1,
+  :app_id => 1,
+  :code => 'q3',
+  :name => 'Q3',
+  :title => '',
+  :description => '',
+  :abstract => abstract,
+  :p_abstract => abstract,
+  :content => content,
+  :p_content => content,
+  :question_text => question_text,
+  :p_question_text => question_text,
+  :answer_a => 'lucky guess',
+  :p_answer_a => 'lucky guess',
+  :correct_a => true,
+  :p_correct_a => true,
+  :answer_b => 'bad',
+  :p_answer_b => 'bad',
+  :correct_b => true,
+  :p_correct_b => true,
+  :answer_c => 'badder',
+  :p_answer_c => 'badder',
+  :correct_c => true,
+  :p_correct_c => true,
+  :answer_d => 'baddest',
+  :p_answer_d => 'baddest',
+  :correct_d => false,
+  :p_correct_d => false,
+  :answer_e => '',
+  :p_answer_e => '',
+  :correct_e => false,
+  :p_correct_e => false,
+  :answer_f => '',
+  :p_answer_f => '',
+  :correct_f => false,
+  :p_correct_f => false,
+  :position => 3,
   :published => true,
   :active => true
 )
