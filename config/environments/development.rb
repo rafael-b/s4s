@@ -37,12 +37,12 @@ Rsite::Application.configure do
   
   config.action_mailer.default_url_options = { :host => "locahost:3023", :protocol => "http" }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'gmail.com',
-    user_name:            'skills4safety',
-    password:             'amazing123',
-    authentication:       'plain',
-    enable_starttls_auto: true  }
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.gmail.com',
+  #   port:                 587,
+  #   domain:               'gmail.com',
+  #   user_name:            'skills4safety',
+  #   password:             'amazing123',
+  #   authentication:       'plain',
+  #   enable_starttls_auto: true  }
 end
