@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
 #--------------------------------------------------------------------------------------------------------------------------------
 
   def store_location
-   # store last url - this is needed for post-login redirect to whatever the user last visited.
+    # store last url - this is needed for post-login redirect to whatever the user last visited.
       if (request.fullpath != "/users/sign_in" && 
           request.fullpath != "/users/sign_up" && 
           request.fullpath != "/users/password" && 
@@ -161,20 +161,20 @@ class ApplicationController < ActionController::Base
       end
   end
 
-  #def after_sign_in_path_for(resource)
-  #  session[:previous_url] || "/home"
-  #end
-
   def after_sign_in_path_for(resource)
-    #return request.env['omniauth.origin'] || stored_location_for(resource) || root_path
-    path = @default ? @default.after_login_path : '/home'
-    return path
+    session[:previous_url] || "/home"
   end
 
-  def after_sign_out_path_for(resource_or_scope)
-    path = '/home'
-    return path
-  end
+  #def after_sign_in_path_for(resource)
+  #  #return request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+  #  path = @default ? @default.after_login_path : '/home'
+  #  return path
+  #end
+  # 
+  # def after_sign_out_path_for(resource_or_scope)
+  #   path = '/home'
+  #   return path
+  # end
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------

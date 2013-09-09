@@ -1,0 +1,15 @@
+- log_object_partial '/user/user_views'
+
+%h2= 'User Views:'
+
+%ul.user_actions
+  %li= link_to "User Info", "/user/#{@object.id}"
+  - if blog_enabled?
+    %li= link_to "Blog activity", "/user/#{@object.id}/blog"
+  - if forum_enabled?
+    %li= link_to "Forum activity", "/user/#{@object.id}/forum"
+  - if store_enabled?
+    %li= link_to "Orders history", "/user/#{@object.id}/store"
+  - if school_enabled?
+    %li= link_to "School progress", "/user/#{@object.id}/school"
+

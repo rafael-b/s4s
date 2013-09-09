@@ -14,20 +14,20 @@
     
   .course_lectures
     %h3= "This course contains #{@lectures.size} lecture(s)."
-    %table.list
+    %table.for_list
       %tbody
         - @lectures.each do |lecture|
           %tr{:class=>cycle('odd','even')}
-            %td.title= safe lecture.title
-            %td.description= safe lecture.description
+            %td.first.title= safe lecture.title
+            %td.next.description= safe lecture.description
             - if is_enrolled_in(@object.id)
-              %td.actions
+              %td.next.actions
                 - quiz = lecture.quiz
                 - if passed_quiz(quiz)
                   %span.status.passed= "Passed"
                 - elsif is_eligible_for(quiz)
                   = link_to "take the quiz".html_safe, "/school/#{lecture.quiz.id}/quiz"
-              %td.actions
+              %td.last.actions
                 = link_to "read more &raquo;".html_safe, "/school/#{lecture.id}/lecture"
       
   

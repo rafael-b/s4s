@@ -23,7 +23,9 @@
     %div.quiz_eval.passed= 'Quiz: <b>PASSED</b> !!'.html_safe
   - else
     %div.quiz_eval.failed= 'Quiz: <b>FAILED</b>'.html_safe
-  %div.quiz_score.failed= "Score: #{@object.score}"
+  %div.quiz_score
+    = "Your Score: #{@object.score}%<br/>".html_safe
+    = "Passing Score: #{@object.quiz.passing_score}%"
   
   %br
   %hr
@@ -34,14 +36,16 @@
         - @object.answers.each do |ans|
           %tr
             %td.quiz_result_question_number= "#{ans.position}."
-            - Question::ANSWER_PREFIX.each do |prefix|
-              - if ans.send("answer_#{prefix}")
-                - if ans.correct
-                  %td.quiz_answer_eval_td
-                    .quiz_answer_eval.correct= 'CORRECT'
-                - else
-                  %td.quiz_answer_eval_td
-                    .quiz_answer_eval.incorrect= 'INCORRECT'
+            %td.quiz_answer_eval_td
+              - if ans.correct
+                .quiz_answer_eval.correct= 'CORRECT'
+              - else
+                .quiz_answer_eval.incorrect= 'INCORRECT'
+
+              .debug
+                = safe "Q: #{Binary.show_flags(ans.question.answer_mask)}<br/>"
+                = safe "A: #{Binary.show_flags(ans.answer_mask)}<br/>"
+                = safe "Correct: #{RDisplay.yn(ans.correct)}"
 
   %br
   = "Passed #{@object.correct_n} out of #{@object.questions_n} questions."

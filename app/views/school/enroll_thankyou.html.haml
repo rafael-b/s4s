@@ -1,15 +1,52 @@
-%h1= 'Thank You for Enrollment in:'
-
-- if @object
-  .block
-    %h3= @object.title
-    %h4= @object.description
-    = safe @object.abstract
+%h1= 'Thank you for your enrollment'
 
 - if @page
   = safe Parser.parse(@page.p_content)
-
 - else
-  .error= 'Static text needed.'
+  .error= 'Static text needed'
+
+%table.like_columns
+  %tbody
+    %tr
+    
+      %td.w50p.first
+        - if @enrollment
+          %h3= 'Enrollment details:'
+
+          - usr = @enrollment.user
+          - if usr
+            %table.for_data
+              %caption= 'User Info'
+              %tbody
+                = RDisplay.row('User ID',usr.id)
+                = RDisplay.row('User Name',usr.name)
+                = RDisplay.row('User Email',usr.email)
+                = RDisplay.row('Report Email',RDisplay.str(@enrollment.reporting_email))
+          - else
+            .error= 'User Missing'
+
+          - crs = @enrollment.course
+          - if crs
+            %table.for_data
+              %caption= 'Course Info'
+              %tbody
+                = RDisplay.row('Course ID',crs.id)
+                = RDisplay.row('Course Title',crs.title)
+          - else
+            .error= 'Course Missing'
+
+        - else
+          .error= 'Enrollment missing'
+
+      %td.w50p.last
+        - if @course
+          %h3= 'Course details:'
+          .block
+            %h4= @course.title
+            %h5= @course.description
+            = safe @course.abstract
+        - else
+          .error= 'Course missing'
+
   
   

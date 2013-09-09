@@ -58,7 +58,28 @@ class Enrollment < ActiveRecord::Base
 #--------------------------------------------------------------------------------------------------------------------------------
 
   def before_save_tasks_local
-    # ensure user exists - create if needed
+    verify_user_existance
+    return true
+  end
+
+#--------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------
+
+  def verify_user_existance
+    return if self.user
+    usr = User.first(:conditions=>{:email=>self.user_email.downcase})
+    if !usr # no usr found, so create one
+      usr         = User.new
+      usr.email   = self.user_email.downcase
+      usr.name    = self.user_name
+      usr.role_id = User::STUDENT
+      password    = 'fluffy'
+      usr.password              = password
+      usr.password_confirmation = password
+      usr.save
+    end # if !usr
+    self.user_id   = usr.id
+    self.user_name = usr.name
   end
 
 #--------------------------------------------------------------------------------------------------------------------------------

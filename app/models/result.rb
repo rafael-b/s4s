@@ -14,6 +14,9 @@ class Result < ActiveRecord::Base
   
 #--------------------------------------------------------------------------------------------------------------------------------
 
+  # creates (saves) and returns a new Result object, including the associated Answer objets
+  # the fields are pre-populated from supplied qiz and usr objects
+  # the Answers populated from appropriate Question objects
   def self.create_from(qiz,usr)
     q = qiz
     r = Result.new
@@ -39,11 +42,12 @@ class Result < ActiveRecord::Base
         
           ans = Answer.new
 
-          ans.result_id  = r.id
-          ans.user_id    = usr.id if usr
-          ans.quiz_id    = q.quiz_id
-          ans.lecture_id = q.lecture_id || q.quiz.lecture_id
-          ans.course_id  = q.course_id  || q.quiz.course_id
+          ans.result_id     = r.id
+          ans.user_id       = usr.id if usr
+          ans.question_id   = q.id
+          ans.quiz_id       = q.quiz_id
+          ans.lecture_id    = q.lecture_id || q.quiz.lecture_id
+          ans.course_id     = q.course_id  || q.quiz.course_id
 
           ans.question_text = q.p_question_text
           ans.question_text = q.p_content if ans.question_text.blank?
@@ -67,7 +71,27 @@ class Result < ActiveRecord::Base
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
+  # evaluates all associated answers
+  # - each Answer's mask should already be correctly determined (at Answer save)
+  # - compare with appropriate Question's mask
+  # - fill in the 'correct' value and re-save each Answer
+  def evaluate_answers
+    self.answers.each do |a|
+      q = a.question
+      a.correct = (a.answer_mask == q.answer_mask)
+      a.save(:validate=>false)
+    end
+  end
+
   def calculate_score
+    self.questions_n = (self.answers || []).size
+    self.correct_n   = 0
+    self.answers.each do |a|
+      self.correct_n += 1 if a.correct
+    end
+    self.score  = ( self.correct_n.to_f / self.questions_n.to_f ) * 100.0
+    self.passed = self.score >= self.quiz.passing_score
+    self.save(:validate=>false)
   end
 
 #================================================================================================================================

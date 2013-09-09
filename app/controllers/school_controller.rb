@@ -36,6 +36,8 @@ class SchoolController < ApplicationController
     if @course
       @object = Enrollment.new
       
+      @object.course_id  = @course.id
+
       @object.code = @course.code
       @object.name = @course.name
       @object.title = @course.title
@@ -46,7 +48,6 @@ class SchoolController < ApplicationController
       @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
 
       if current_user
-        @object.course_id  = @course.id
         @object.creator_id = current_user.id
         @object.user_id    = current_user.id
         @object.user_name  = current_user.name
@@ -75,8 +76,11 @@ class SchoolController < ApplicationController
   end
   
   def enroll_thankyou
-    @object = Course.first(:conditions=>{:published=>true,:active=>true,:id=>params[:id]})
-    @page   = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'enroll_thanks'})
+    @enrollment = Enrollment.first(:conditions=>{:id=>params[:id]})
+    if @enrollment
+      @course = Course.first(:conditions=>{:published=>true,:active=>true,:id=>@enrollment.id})
+      @page   = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'enroll_thankyou'})
+    end
   end
 
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -116,6 +120,7 @@ class SchoolController < ApplicationController
       @lecture = @object.lecture
       @page    = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'quiz_thanks'})
     
+      @object.evaluate_answers
       @object.calculate_score
     end # if object
   end

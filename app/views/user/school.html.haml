@@ -1,0 +1,61 @@
+- log_object_view '/user/school'
+
+%h1= 'User Control Panel'
+%hr
+
+- if @object
+
+  - if (current_user && current_user.id == @object.id) || (current_user.role_id>=User::ADMIN)
+  
+    %table.like_columns
+      %tbody
+        %tr
+          %td.w50p.first
+          
+            %h2= @object.name
+          
+            %table.for_data
+              %caption= 'School progress overview'
+
+              %tr
+                = RDisplay.label_td('Current')
+                %td.data
+                  - current = @object.current_courses
+                  - if current.size == 0
+                    = 'none'
+                  - else
+                    - current.each do |c|
+                      = c.title
+                      %br
+          
+              %tr
+                = RDisplay.label_td('Passed')
+                %td
+                  - passed = @object.passed_courses
+                  - if passed.size == 0
+                    = 'none'
+                  - else
+                    - passed.each do |c|
+                      = c.title
+                      %br
+  
+              %tr
+                = RDisplay.label_td('Failed')
+                %td
+                  - failed = @object.failed_courses
+                  - if failed.size == 0
+                    = 'none'
+                  - else
+                    - failed.each do |c|
+                      = c.title
+                      %br
+
+          %td.w25p.next=  render :partial=>'/user/user_views'
+          %td.w25p.last=  render :partial=>'/user/user_actions'
+          
+  - else
+    %h2.error= 'You are not authorized to see this page!'
+
+- else
+  %h2.error= "User Not Found..."
+  %p= "/user/#{@id}"

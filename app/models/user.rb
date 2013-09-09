@@ -71,11 +71,18 @@ class User < ActiveRecord::Base
 #--------------------------------------------------------------------------------------------------------------------------------
 
   def current_courses
-    return self.user_courses.select{|c| c if !c.passed }.map{|x| x.course}
+    return self.enrollments.select{|c| c if !c.passed }.map{|x| x.course}
   end
   def completed_courses
-    return self.user_courses.select{|c| c if c.passed }.map{|x| x.course}
+    return self.enrollments.select{|c| c if c.passed || c.failed }.map{|x| x.course}
   end
+  def passed_courses
+    return self.enrollments.select{|c| c if c.passed }.map{|x| x.course}
+  end
+  def failed_courses
+    return self.enrollments.select{|c| c if c.failed }.map{|x| x.course}
+  end
+
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------

@@ -127,18 +127,27 @@
             %li
               = link_to 'Lectures', lectures_path, :class=>menu_here('lectures')
               = obj_count(:lectures)
+          %ul
             %li
               = link_to 'Quizzes', quizzes_path, :class=>menu_here('quizzes')
               = obj_count(:quizzes)
             %li
               = link_to 'Questions', questions_path, :class=>menu_here('questions')
               = obj_count(:questions)
+          %hr
+          %ul
+            %li
+              = link_to 'Results', results_path, :class=>menu_here('results')
+              = obj_count(:results)
+            %li
+              = link_to 'Answers', results_path, :class=>menu_here('answers')
+              = obj_count(:answers)
           %ul
             %li
               = link_to 'Enrollments', enrollments_path, :class=>menu_here('enrollments')
               = obj_count(:enrollments)
-              = link_to 'Certificates', enrollments_path, :class=>menu_here('certificates')
-              = obj_count(:enrollments)
+              = link_to 'Certificates', certificates_path, :class=>menu_here('certificates')
+              = obj_count(:certificates)
 
       .block.feedback
         .title{:id=>'menu_05_h',:class=>menu_05_class_h,:onclick=>"changeMenu('menu_05');"}= 'Feedback'

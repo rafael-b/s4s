@@ -1,0 +1,14 @@
+- log_object_partial '/user/user_info'
+
+%h2= @object.name
+
+%table.for_data
+  %caption= 'User Info:'
+  = RDisplay.row("User ID",@object.id)
+  = RDisplay.row("Email",@object.email)
+  
+%table.for_data
+  %caption= 'User Address:'
+  %tr
+    %td= 'none'
+  

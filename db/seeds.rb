@@ -106,6 +106,12 @@ AppSegment.create(
   :title => 'Override',
   :description => "Scope: all"
 )
+AppSegment.create(
+  :code  => 'cond',
+  :name  => 'cond',
+  :title => 'Conditional',
+  :description => "Scope: all"
+)
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 

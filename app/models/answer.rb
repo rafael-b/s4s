@@ -8,6 +8,8 @@ class Answer < ActiveRecord::Base
   
   belongs_to :quiz
 
+  before_save :before_save_tasks_local
+
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
 
@@ -50,8 +52,8 @@ class Answer < ActiveRecord::Base
   def before_save_tasks_local
     self.answer_mask = 0
     i = 0
-    ANSWER_PREFIX.each do |prefix|
-      correct = self.send("correct_#{prefix}")
+    Question::ANSWER_PREFIX.each do |prefix|
+      correct = self.send("answer_#{prefix}")
       self.answer_mask += ( 1 << i ) if correct
       i += 1
     end # do prefix

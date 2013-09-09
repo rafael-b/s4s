@@ -1,8 +1,6 @@
 Rsite::Application.routes.draw do
 
-  devise_for :user, :controllers=>{:sessions=>'sessions',:registrations=>'registrations',:passwords=>'passwords'} do
-    get '/user/sign_out' => 'devise/sessions#destroy'    
-  end
+  devise_for :users
 
   resources :enrollments
   
@@ -31,6 +29,12 @@ Rsite::Application.routes.draw do
     member do
       get :edit_password
       put :update_password
+      
+      get :blog
+      get :forum
+      get :store
+      get :school
+      
       get :courses
       get :enroll
       put :payment
@@ -272,6 +276,9 @@ Rsite::Application.routes.draw do
     end
   end
 
+  resources :results
+  resources :answers
+  resources :certificates
 
   resources :products do
     member do 

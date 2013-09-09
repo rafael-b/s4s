@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
 #--------------------------------------------------------------------------------------------------------------------------------
 # generate edit_x and update_x pairs for various fields
 
-  [:abstract,:content,:question_text].each do |field|
+  [:abstract,:content,:question].each do |field|
 
     define_method("edit_#{field}") do
       @object = Question.find(params[:id])

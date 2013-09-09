@@ -1,0 +1,9 @@
+- log_object_partial '/user/user_actions'
+
+%h2= 'User Actions:'
+
+%ul.user_actions
+  %li= link_to "Edit info", "/user/#{@object.id}"
+  %li= link_to "Edit address", "/user/#{@object.id}"
+  %li= link_to "Change password", "/user/#{@object.id}"
+
