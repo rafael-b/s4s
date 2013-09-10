@@ -7,3 +7,7 @@
   .debug
     = "Code: #{@code}<br/>".html_safe
     = "Page: /home/#{@code}"
+    
+%hr
+- if @p
+  = @p.id
