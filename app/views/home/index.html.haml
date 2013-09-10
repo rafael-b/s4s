@@ -18,3 +18,5 @@
 - if @p3
   = @p3.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
   %br
+- if @p
+  = "#{@p.id}:#{@p.code}:#{@p.app_segment_id}"
