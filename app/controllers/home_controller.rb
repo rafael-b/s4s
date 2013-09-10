@@ -11,7 +11,8 @@ class HomeController < ApplicationController
     @page_here  = 'index'
     @page_class = 'index'
     @code = 'index'
-    @page = Page.all(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code}).first
+    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code})
+    @page = Page.first(:conditions=>{:name=>@code})
     
   end
 
