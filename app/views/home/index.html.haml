@@ -10,4 +10,4 @@
     
 %hr
 - if @p
-  = @p.id
+  = @p.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
