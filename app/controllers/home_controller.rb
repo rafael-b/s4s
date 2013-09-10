@@ -16,6 +16,8 @@ class HomeController < ApplicationController
     @p2 = Page.where(:code=>'index')
     @p3 = Page.where(:code=>'index',:app_segment_id=>AppSegment::HOME_STUFF)
     @p  = @p3.first
+    @pp1 = Page.where(:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code)
+    @pp  = @pp1.first
     
   end
 
