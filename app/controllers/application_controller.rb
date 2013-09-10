@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 #  layout :layout_by_resource
 
   protect_from_forgery
+  before_filter :http_authenticate
   before_filter :store_location
   before_filter :load_settings
   before_filter :global_setup
@@ -189,6 +190,16 @@ protected
 #      return "website"
 #    end
 #  end
+
+#=============================================================================================
+#=============================================================================================
+
+def http_authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+        username == "skills" && password == "safety"
+    end
+    warden.custom_failure! if performed?
+end
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
