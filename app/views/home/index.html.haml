@@ -1,6 +1,6 @@
 
-- if @object
-  = safe Parser.parse(@object.p_content)
+- if @page
+  = safe Parser.parse(@page.p_content)
   
 - else
   %h1.error= "Page Not Found..."
