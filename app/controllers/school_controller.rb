@@ -70,7 +70,7 @@ class SchoolController < ApplicationController
       end
       @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
       @course = Course.first(:conditions=>{:published=>true,:active=>true,:id=>params[:id]})
-      @page   = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'enroll'})
+      @page   = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>'enroll'})
       render :action => :enroll
     end  
   end
@@ -118,7 +118,7 @@ class SchoolController < ApplicationController
       @user    = @object.user
       @course  = @object.course
       @lecture = @object.lecture
-      @page    = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'quiz_thanks'})
+      @page    = Page.first(:conditions=>{:published=>true,:active=>true,:app_segment_id=>AppSegment::SCHOOL,:code=>'quiz_thankyou'})
     
       @object.evaluate_answers
       @object.calculate_score

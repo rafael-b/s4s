@@ -1,6 +1,6 @@
 
-- if @pp
-  = safe Parser.parse(@pp.p_content)
+- if @page
+  = safe Parser.parse(@page.p_content)
   
 - else
   %h1.error= "Page Not Found..."
@@ -8,23 +8,3 @@
     = "Code: #{@code}<br/>".html_safe
     = "Page: /home/#{@code}"
     
-%hr
-- if @p1
-  = @p1.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
-  %br
-- if @p2
-  = @p2.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
-  %br
-- if @p3
-  = @p3.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
-  %br
-- if @p
-  = "#{@p.id}:#{@p.code}:#{@p.app_segment_id}"
-  %br
-- if @pp1
-  = @pp1.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
-  %br
-- if @pp
-  = "#{@pp.id}:#{@pp.code}:#{@pp.app_segment_id}"
-  %br
-  

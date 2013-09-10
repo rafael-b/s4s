@@ -11,14 +11,7 @@ class HomeController < ApplicationController
     @page_here  = 'index'
     @page_class = 'index'
     @code = 'index'
-    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code})
-    @p1 = Page.all
-    @p2 = Page.where(:code=>'index')
-    @p3 = Page.where(:code=>'index',:app_segment_id=>AppSegment::HOME_STUFF)
-    @p  = @p3.first
-    @pp1 = Page.where(:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>@code)
-    @pp  = @pp1.first
-    
+    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>@code})    
   end
 
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -26,7 +19,7 @@ class HomeController < ApplicationController
   def show
     @page_here  = params[:id].to_s
     @code = params[:id].to_s
-    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code})
+    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>@code})
     
   end
   
@@ -45,7 +38,7 @@ class HomeController < ApplicationController
       @object.user_name  = current_user.name
       @object.user_email = current_user.email
     end
-    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'contact'})
+    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>'contact'})
   end
   
   def contact_submit
@@ -58,13 +51,13 @@ class HomeController < ApplicationController
         @object.security_question_id = rand(RCaptcha::QUESTIONS.size)
       end
       @security_question = RCaptcha::QUESTIONS[@object.security_question_id.to_i]
-      @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'contact'})
+      @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>'contact'})
       render :action => :contact
     end  
   end
   
   def contact_thankyou
-    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>'contact_thankyou'})
+    @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:code=>'contact_thankyou'})
   end
   
 #--------------------------------------------------------------------------------------------------------------------------------
