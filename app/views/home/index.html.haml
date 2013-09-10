@@ -1,7 +1,9 @@
 
-- if @page
-  = safe Parser.parse(@page.p_content)
+- if @object
+  = safe Parser.parse(@object.p_content)
   
 - else
   %h1.error= "Page Not Found..."
-  %p= "/home/#{@code}"
+  .debug
+    = "Code: #{@code}<br/>".html_safe
+    = "Page: /home/#{@code}"
