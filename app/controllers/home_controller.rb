@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @page_class = 'index'
     @code = 'index'
     @page = Page.first(:conditions=>{:app_segment_id=>AppSegment::HOME_STUFF,:published=>true,:active=>true,:name=>@code})
-    @page = Page.first(:conditions=>{:name=>@code})
+    @page = Page.where(:name=>@code).first
     
   end
 
