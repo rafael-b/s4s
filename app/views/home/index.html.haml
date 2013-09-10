@@ -9,5 +9,12 @@
     = "Page: /home/#{@code}"
     
 %hr
-- if @p
-  = @p.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
+- if @p1
+  = @p1.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
+  %br
+- if @p2
+  = @p2.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
+  %br
+- if @p3
+  = @p3.map{|x| "#{x.id}:#{x.code}:#{x.app_segment_id}"}.inspect
+  %br
